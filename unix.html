@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>BackOffice DyF — UNIX Terminal</title>
+  <style>
+    body {
+      background: #000;
+      color: #33ff33;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      padding: 1rem;
+      white-space: pre;
+      cursor: none;
+    }
+    a {
+      color: #33ff33;
+      text-decoration: underline;
+      cursor: none;
+    }
+    a:hover {
+      color: #0f0;
+    }
+    #output, #about, #terminal {
+      display: none;
+    }
+    ::selection {
+      background: #33ff33;
+      color: #000;
+    }
+    #cursor {
+      display: inline;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    input {
+      background: transparent;
+      border: none;
+      color: #33ff33;
+      font-family: 'Courier New', monospace;
+      font-size: 18px;
+      outline: none;
+      width: 90%;
+    }
+    .prompt {
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+
+<pre id="boot-msg"></pre>
+
+<div id="output"><pre>
+>> Bienvenido al sistema BackOffice_DyF
+>> Conectarse es un privilegio.
+>> Type 'help' para comenzar.
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║ [*] INICIADO…                                                              ║
+║ [*] BACKOFFICE_DyF Terminal CARGADO                                        ║
+║ [*] Acceso permitido. Bienvenido, Operador.                                ║
+║                                                                            ║
+║ [!] Un tributo a UNIX, terminales y a cuando conectarse era un ritual.     ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐  
+│ [+] Desarrollamos FLUJOS & HERRAMIENTAS a medida                            │  
+│ [>] Tecnologías: EXCEL │ VBA │ HTML │ JS │ CSS │ PYTHON │ SQL               │  
+├─────────────────────────────────────────────────────────────────────────────┤  
+│ Herramientas:                                                               │  
+│  [1] Soporte        -> <a href="https://t.me/soportefyd_bot" target="_blank">https://t.me/soportefyd_bot</a>                          │
+│  [2] Búsqueda       -> <a href="https://t.me/infocertero_bot" target="_blank">https://t.me/infocertero_bot</a>                         │ 
+│  [3] Capacitación   -> <a href="https://t.me/capabackoffice_bot" target="_blank">https://t.me/capabackoffice_bot</a>                      │   
+├─────────────────────────────────────────────────────────────────────────────┤  
+│  Información adicional:                                                     │
+│  [*] Sobre nosotros   -> <a href="#" target="_self" id="link">Leeme</a>                                              │ 
+│  [*] Contacto Soporte -> <a href="https://t.me/+eRscI0QPfzg1Mzc5" target="_blank">Canal de soporte</a>                                   │
+│  [*] Ver como Terminal DOS -> <a href="https://dyfdev.github.io/pagina/" target="_blank">MS-DOS</a>                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+</pre></div>
+
+<div id="terminal">
+  <div id="terminal-output"></div>
+  <div>
+    <span class="prompt">dyf@bbs:~$ </span><input type="text" id="terminal-input" autofocus />
+  </div>
+</div>
+
+<div id="about">
+SOBRE NOSOTROS
+==============
+
+Este sitio simula una terminal UNIX clásica, como las que usábamos en los años 90.
+Un homenaje a la crudeza funcional, la simpleza, la velocidad y el enfoque.
+
+Cuando conectarse a un sistema era una experiencia. No una app.
+
+← <a href="#" target="_self" id="volver">Volver al menú</a>
+</div>
+
+<span id="cursor">█</span>
+
+<script>
+const bootMessages = [
+  ">> INIT: Booting BackOffice_DyF...",
+  ">> tty1: Starting secure shell session...",
+  ">> /usr/bin/backoffice loaded.",
+  ">> Running pre-authentication checks...",
+  ">> AUTH: user 'INVITADO' accepted [uid=1001]",
+  ">> Welcome to DyF Terminal System v1.2",
+  ">> Type 'help' for available commands.",
+  ""
+];
+
+let currentMessage = 0;
+let currentChar = 0;
+const bootMsgElement = document.getElementById("boot-msg");
+
+function typeMessage() {
+  if (currentMessage < bootMessages.length) {
+    const message = bootMessages[currentMessage];
+    if (currentChar < message.length) {
+      bootMsgElement.textContent += message.charAt(currentChar);
+      currentChar++;
+      setTimeout(typeMessage, 10);
+    } else {
+      bootMsgElement.textContent += "\n";
+      currentMessage++;
+      currentChar = 0;
+      setTimeout(typeMessage, 300);
+    }
+  } else {
+    setTimeout(() => {
+      bootMsgElement.style.display = "none";
+      document.getElementById("output").style.display = "block";
+      document.getElementById("terminal").style.display = "block";
+    }, 500);
+  }
+}
+typeMessage();
+</script>
+
+<script>
+const terminalInput = document.getElementById('terminal-input');
+const terminalOutput = document.getElementById('terminal-output');
+const link = document.getElementById('link');
+const about = document.getElementById('about');
+const output = document.getElementById('output');
+const volver = document.getElementById('volver');
+
+const commands = {
+  help: "Comandos disponibles:\n - help\n - clear\n - about\n - exit",
+  clear: () => terminalOutput.innerHTML = '',
+  about: "DyF Terminal v1.2\nTributo a UNIX y los BBS de los 90.",
+  exit: "Sesión cerrada. Puede cerrar la ventana."
+};
+
+terminalInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    const cmd = this.value.trim();
+    const outputText = commands[cmd] || `Comando no reconocido: ${cmd}`;
+    terminalOutput.innerHTML += `<div><span class="prompt">dyf@bbs:~$</span> ${cmd}</div>`;
+    if (typeof outputText === 'function') {
+      outputText();
+    } else {
+      terminalOutput.innerHTML += `<div>${outputText}</div>`;
+    }
+    this.value = '';
+  }
+});
+
+link.addEventListener('click', (e) => {
+  e.preventDefault();
+  output.style.display = 'none';
+  about.style.display = 'block';
+});
+
+volver.addEventListener('click', (e) => {
+  e.preventDefault();
+  about.style.display = 'none';
+  output.style.display = 'block';
+});
+</script>
+
+</body>
+</html>
