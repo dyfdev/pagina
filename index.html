@@ -227,6 +227,7 @@ function closeAbout(e) {
   e.preventDefault();
   about.style.display  = 'none';
   output.style.display = 'block';
+  window.scrollTo(0, 0);
 }
 
 link.addEventListener('click', openAbout);
