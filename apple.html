@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>BackOffice DyF — Mac Terminal 90's</title>
+  <style>
+    body {
+      background: #e0e0e0;
+      color: #000;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 16px;
+      margin: 0;
+      padding: 2rem;
+      white-space: pre-wrap;
+    }
+
+    .terminal-window {
+      background: #fff;
+      border: 2px solid #999;
+      box-shadow: 3px 3px 0 #888;
+      padding: 1rem;
+      width: 90%;
+      max-width: 720px;
+      margin: auto;
+    }
+
+    .title-bar {
+      background: #c0c0c0;
+      padding: 0.3rem 0.5rem;
+      font-weight: bold;
+      border-bottom: 1px solid #999;
+    }
+
+    .content {
+      padding: 0.5rem;
+    }
+
+    a {
+      color: #0000cc;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: #cc0000;
+    }
+
+    #boot-msg {
+      font-family: 'Monaco', monospace;
+      padding: 1rem;
+      background: #fff;
+      color: #000;
+      border: 2px solid #999;
+      width: 90%;
+      max-width: 720px;
+      margin: auto;
+      margin-top: 2rem;
+    }
+
+    #output, #about {
+      display: none;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      background: #000;
+      animation: blink 1s step-start infinite;
+      margin-left: 2px;
+      height: 1em;
+      vertical-align: bottom;
+    }
+
+    @keyframes blink {
+      50% { background: transparent; }
+    }
+  </style>
+</head>
+<body>
+
+<pre id="boot-msg"></pre>
+
+<div id="output" class="terminal-window">
+  <div class="title-bar">BackOffice DyF — Terminal Macintosh 90s</div>
+  <div class="content"><pre>
+Bienvenido a BackOffice_DyF
+----------------------------
+[*] Terminal cargada correctamente.
+[*] Modo: MacOS Classic BBS (Estilo ZTerm)
+[*] Usuario: INVITADO
+
+Opciones disponibles:
+  [1] Soporte
+      - <a href="https://t.me/soportefyd_bot" target="_blank">Ir a soporte</a>
+
+  [2] Búsqueda
+      - <a href="https://t.me/infocertero_bot" target="_blank">Ir a búsqueda</a>
+
+  [3] Capacitación
+      - <a href="https://t.me/capabackoffice_bot" target="_blank">Ir a capacitación</a>
+
+  [4] Sobre nosotros
+      - <a href="#" id="link">Leeme</a>
+      - <a href="https://t.me/+eRscI0QPfzg1Mzc5" target="_blank">Soporte</a>
+      - <a href="https://dyfdev.github.io/pagina/unix.html" target="_self">Ver como Unix</a>
+
+>> Esperando comando...<span class="cursor"></span>
+</pre></div>
+</div>
+
+<div id="about" class="terminal-window" style="display: none;">
+  <div class="title-bar">Sobre BackOffice DyF</div>
+  <div class="content"><pre>
+Contexto:
+=========
+Este sitio emula un terminal clásico de Macintosh (ZTerm)
+con estilo de BBS de los años 90.
+
+Características:
+- Fondo claro y tipografía Monaco (como en System 7/8).
+- Sin gráficos innecesarios.
+- Enfoque puro en el texto.
+- Experiencia basada en navegación por teclado.
+
+Una forma simple y directa de interactuar con el sistema.
+
+<a href="#" id="volver">← Volver al menú</a>
+</pre></div>
+</div>
+
+<script>
+const bootMessages = [
+  "MacTerminal 3.5 (C) DyF Systems 1994",
+  "Conectando a BackOffice_DyF...",
+  "[✓] Línea establecida a 9600 baud",
+  "[✓] Enlace seguro autenticado",
+  "[✓] Usuario INVITADO conectado correctamente",
+  "",
+  "Cargando sistema...",
+  ""
+];
+
+let currentMessage = 0;
+let currentChar = 0;
+const bootMsgElement = document.getElementById("boot-msg");
+
+function typeMessage() {
+  if (currentMessage < bootMessages.length) {
+    const message = bootMessages[currentMessage];
+    if (currentChar < message.length) {
+      bootMsgElement.textContent += message.charAt(currentChar);
+      currentChar++;
+      setTimeout(typeMessage, 20);
+    } else {
+      bootMsgElement.textContent += "\n";
+      currentMessage++;
+      currentChar = 0;
+      setTimeout(typeMessage, 300);
+    }
+  } else {
+    setTimeout(() => {
+      bootMsgElement.style.display = "none";
+      document.getElementById("output").style.display = "block";
+    }, 500);
+  }
+}
+typeMessage();
+
+const link = document.getElementById('link');
+const about = document.getElementById('about');
+const output = document.getElementById('output');
+const volver = document.getElementById('volver');
+
+link.addEventListener('click', (e) => {
+  e.preventDefault();
+  output.style.display = 'none';
+  about.style.display = 'block';
+});
+
+volver.addEventListener('click', (e) => {
+  e.preventDefault();
+  about.style.display = 'none';
+  output.style.display = 'block';
+});
+</script>
+</body>
+</html>
