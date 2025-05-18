@@ -173,42 +173,82 @@ const bootMessages = [
   "█      [Dial-Up | 2400 Baud | ANSI]    █",
   "████████████████████████████████████████",
   "",
-  "[*] Discando línea segura [########################################] 100%",
-  "[*] Handshake establecido [########################################] 100%",
-  "[*] Negociando protocolo [████████████████████████████████████████] 100%",
+  "[*] Discando línea segura ",
+  "[*] Handshake establecido ",
+  "[*] Negociando protocolo ",
   "[✓] Autenticado como: INVITADO",
   "",
   "Bienvenido al sistema.",
   "Conectarse es un privilegio.",
-  "Cargar herramientas... [████████████████████████████████████████] 100%",
-  ""
 ];
 
- let currentMessage = 0;
- let currentChar = 0;
- const bootMsgElement = document.getElementById("boot-msg");
+const finalMessages = {
+  6: "[*] Discando línea segura [OK]",
+  7: "[*] Handshake establecido [OK]",
+  8: "[*] Negociando protocolo [OK]",
+};
 
- function typeMessage() {
-   if (currentMessage < bootMessages.length) {
-     const message = bootMessages[currentMessage];
-     if (currentChar < message.length) {
-       bootMsgElement.textContent += message.charAt(currentChar);
-       currentChar++;
-       setTimeout(typeMessage, 10); // 10 ms entre caracteres
-     } else {
-       bootMsgElement.textContent += "\n";
-       currentMessage++;
-       currentChar = 0;
-       setTimeout(typeMessage, 300); // 200 ms entre líneas
-     }
-   } else {
-     setTimeout(() => {
-       bootMsgElement.style.display = "none";
-       document.getElementById("output").style.display = "block";
-     }, 250);
-   }
- }
- typeMessage();
+const spinnerFrames = ["|", "/", "-", "\\"];
+
+let currentMessage = 0;
+let currentChar = 0;
+let spinnerIndex = 0;
+const bootMsgElement = document.getElementById("boot-msg");
+
+// Guardamos las líneas que ya fueron tipeadas
+let typedLines = [];
+
+function typeMessage() {
+  if (currentMessage < bootMessages.length) {
+    const message = bootMessages[currentMessage];
+    if (currentChar < message.length) {
+      // Mientras tipeamos el mensaje actual char por char
+      if (!typedLines[currentMessage]) typedLines[currentMessage] = "";
+      typedLines[currentMessage] += message.charAt(currentChar);
+      bootMsgElement.textContent = typedLines.join("\n");
+      currentChar++;
+      setTimeout(typeMessage, 1);
+    } else {
+      // Terminamos de tipear la línea
+      if (finalMessages[currentMessage]) {
+        animateSpinner(currentMessage);
+      } else {
+        // Solo agregamos la línea terminada y avanzamos
+        if (!typedLines[currentMessage]) typedLines[currentMessage] = message;
+        bootMsgElement.textContent = typedLines.join("\n") + "\n";
+        currentMessage++;
+        currentChar = 0;
+        setTimeout(typeMessage, 50);
+      }
+    }
+  } else {
+    setTimeout(() => {
+      bootMsgElement.style.display = "none";
+      document.getElementById("output").style.display = "block";
+    }, 100);
+  }
+}
+
+function animateSpinner(messageIndex, spinnerCount = 0) {
+  if (spinnerCount < 20) {
+    const baseMsg = bootMessages[messageIndex];
+    const spinnerChar = spinnerFrames[spinnerIndex % spinnerFrames.length];
+    spinnerIndex++;
+    // Actualizamos sólo la línea actual con el spinner
+    typedLines[messageIndex] = baseMsg + spinnerChar;
+    bootMsgElement.textContent = typedLines.join("\n");
+    setTimeout(() => animateSpinner(messageIndex, spinnerCount + 1), 100);
+  } else {
+    // Reemplazamos la línea con el mensaje final
+    typedLines[messageIndex] = finalMessages[messageIndex];
+    bootMsgElement.textContent = typedLines.join("\n") + "\n";
+    currentMessage++;
+    currentChar = 0;
+    setTimeout(typeMessage, 50);
+  }
+}
+
+typeMessage();
 </script>
 
 <script>
