@@ -173,60 +173,42 @@ const bootMessages = [
   "█      [Dial-Up | 2400 Baud | ANSI]    █",
   "████████████████████████████████████████",
   "",
-  "[*] Discando línea segura [loading]",
-  "[*] Handshake establecido [loading]",
-  "[*] Negociando protocolo [loading]",
-  "[*] Cargar herramientas  [loading]",
+  "[*] Discando línea segura [########################################] 100%",
+  "[*] Handshake establecido [########################################] 100%",
+  "[*] Negociando protocolo [████████████████████████████████████████] 100%",
   "[✓] Autenticado como: INVITADO",
   "",
-  "> La privacidad es un derecho!.",
-  "> Conectarse es un privilegio.",
+  "Bienvenido al sistema.",
+  "Conectarse es un privilegio.",
+  "Cargar herramientas... [████████████████████████████████████████] 100%",
+  ""
 ];
 
-let cm = 0;
-const bootEl = document.getElementById("boot-msg");
+ let currentMessage = 0;
+ let currentChar = 0;
+ const bootMsgElement = document.getElementById("boot-msg");
 
-const SPINNER_FRAMES = ["|", "/", "-", "\\"];
-let spinnerIntervals = [];
-
-function startSpinner(lineId) {
-  let index = 0;
-  spinnerIntervals[lineId] = setInterval(() => {
-    const el = document.getElementById("spinner-" + lineId);
-    if (el) el.textContent = SPINNER_FRAMES[index++ % SPINNER_FRAMES.length];
-  }, 120);
-}
-
-function stopSpinner(lineId) {
-  clearInterval(spinnerIntervals[lineId]);
-  const el = document.getElementById("spinner-" + lineId);
-  if (el) el.outerHTML = '<span class="col-verde">OK</span>';
-}
-
-function typeNext() {
-  if (cm < bootMessages.length) {
-    let rawLine = bootMessages[cm];
-    if (rawLine.includes("[loading]")) {
-      const id = cm; // usar índice de línea como id
-      const textOnly = rawLine.replace("[loading]", "");
-      bootEl.innerHTML += `${textOnly}[<span id="spinner-${id}">|</span>]\n`;
-      startSpinner(id);
-
-      setTimeout(() => {
-        stopSpinner(id);
-        cm++;
-        setTimeout(typeNext, 300);
-      }, 1500); // tiempo del spinner
-    } else {
-      bootEl.innerHTML += rawLine + "\n";
-      cm++;
-      setTimeout(typeNext, 180);
-    }
-  } else {
-    setTimeout(showUI, 1000);
-  }
-}
- typetext();
+ function typeMessage() {
+   if (currentMessage < bootMessages.length) {
+     const message = bootMessages[currentMessage];
+     if (currentChar < message.length) {
+       bootMsgElement.textContent += message.charAt(currentChar);
+       currentChar++;
+       setTimeout(typeMessage, 10); // 10 ms entre caracteres
+     } else {
+       bootMsgElement.textContent += "\n";
+       currentMessage++;
+       currentChar = 0;
+       setTimeout(typeMessage, 300); // 200 ms entre líneas
+     }
+   } else {
+     setTimeout(() => {
+       bootMsgElement.style.display = "none";
+       document.getElementById("output").style.display = "block";
+     }, 500);
+   }
+ }
+ typeMessage();
 </script>
 
 <script>
