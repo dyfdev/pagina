@@ -15,15 +15,6 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
-    }
-    a {
-      color: #fff;
-      text-decoration: underline;
-      cursor: none;
-    } 
-    a:hover {
-      color: #0f0;
     }
     #output {
      display: none;
@@ -33,51 +24,57 @@
       background: #000;
       color: #fff;
       font-family: 'Lucida Console', monospace;
-      font-size: 16px;
+      font-size: 17px;
       padding: 1rem;
       white-space: pre;
     }
+  html {
+    scrollbar-width: none; 
+    overflow: auto;        
+   }
+   html {
+    -ms-overflow-style: none;
+   }
+   body {
+    overflow: auto;
+   }
+
   </style>
 </head>
 <body><pre id="boot-msg"></pre>
 <div id="output"><pre>
-╔════════════════════════════════════════════════════════════════════════════╗
-║ [*] INICIADO…                                                              ║
-║ [*] BACKOFFICE_DyF Terminal CARGADO                                        ║
-║ [*] Acceso permitido. Bienvenido, Operador.                                ║
-║                                                                            ║
-║ [!] Un tributo a los terminales, a los BBS,                                ║
-║     a cuando conectarse era un ritual y no una rutina.                     ║
-╚════════════════════════════════════════════════════════════════════════════╝
 
-┌─────────────────────────────────────────────────────────────────────────────┐  
-│ [+] Desarrollamos FLUJOS & HERRAMIENTAS a medida                            │  
-│ [>] Tecnologías: EXCEL │ VBA │ HTML │ JAVASCRIPT │ CSS │ PYTHON | SQL       │  
-├─────────────────────────────────────────────────────────────────────────────┤  
-│ Herramientas:                                                               │  
-│                                                                             │  
-│  [1] Soporte                                                                │  
-│      - Información sobre entidades                                          │  
-│      - Descarga de herramientas                                             │  
-│      -> [<a href="https://t.me/soportefyd_bot" target="_blank">Ir a soporte</a>]                                                      │  
-│                                                                             │  
-│  [2] Búsqueda                                                               │  
-│      - Detalle por DNI: teléfono, mail, empleo, veraz                       │  
-│      -> [<a href="https://t.me/infocertero_bot" target="_blank">Ir a búsqueda</a>]                                                     │  
-│                                                                             │  
-│  [3] Capacitación                                                           │  
-│      - Textos y videos de ayuda                                             │  
-│      -> [<a href="https://t.me/capabackoffice_bot" target="_blank">Ir a capacitación</a>]                                                 │  
-├─────────────────────────────────────────────────────────────────────────────┤  
-│  Informacion:                                                               │
-|                                                                             │
-|  [1] Sobre nosotros                                                         │
-|      -> [<a href="#" target="_blank" id="link">Leeme</a>]                                                             │
-|      -> [<a href="https://t.me/+eRscI0QPfzg1Mzc5" target="_blank">Soporte</a>]                                                           │
-|      -> [<a href="https://dyfdev.github.io/pagina/unix.html" target="_self">Ver como Unix</a>] | [<a href="https://dyfdev.github.io/pagina/apple.html" target="_self">Ver como Apple</a>]                                  │
-└─────────────────────────────────────────────────────────────────────────────┘
+BackOffice DyF - Terminal DOS
+Versión 1.2.5
 
-[↑] Arriba   |   [↓] Abajo   |   [Tab] Foco   |   [Enter] Ejecutar
+> BACKOFFICE_DyF Terminal CARGADO
+> Acceso permitido. Bienvenido, Operador.
+
+> Desarrollamos FLUJOS & HERRAMIENTAS a medida
+> Tecnologías: EXCEL | VBA | HTML | JAVASCRIPT | CSS | PYTHON | SQL
+
+> Un tributo a los terminales, a los BBS,
+  a cuando conectarse era un ritual y no una rutina.
+
+[HERRAMIENTAS DISPONIBLES]
+
+  [S] Soporte
+      - Información sobre entidades
+      - Descarga de herramientas
+
+  [B] Búsqueda
+      - Detalle por DNI: teléfono, mail, empleo, veraz
+
+  [C] Capacitación
+      - Textos y videos de ayuda
+
+[INFORMACIÓN]
+
+  [L] Leeme
+  [T] Soporte
+  [U] Ver como Unix
+  [M] Ver como Apple
+              
 </pre></div>
 <div id="about" style="display: none;">
 CONTEXTUALIZACION
@@ -162,95 +159,79 @@ HTML 1.0 acababa de salir. Las webs eran 100% texto, sin imágenes, ni CSS, ni J
 Si te resulta raro...  
 es porque ya nos desacostumbramos a lo simple.
 
- -> [<a href="#" target="_self" id="volver">← Menu</a>]
+ -> [V] Volver
 </div>
 </body>
 <script>
 const bootMessages = [
-  "████████████████████████████████████████",
-  "█       BACKOFFICE_DyF CONNECTION      █",
-  "█       SysOp: ******** (Privado)      █",
-  "█      [Dial-Up | 2400 Baud | ANSI]    █",
-  "████████████████████████████████████████",
+  "C:\\> CONECTANDO A BACKOFFICE_DYF...",
+  "C:\\> SYSOP: ********",
+  "C:\\> VELOCIDAD: 2400 BAUD | MODO: ANSI",
   "",
-  "[*] Discando línea segura ",
-  "[*] Handshake establecido ",
-  "[*] Negociando protocolo ",
-  "[✓] Autenticado como: INVITADO",
+  "C:\\> DISCANDO LINEA SEGURA... [loading]",
+  "C:\\> HANDSHAKE ESTABLECIDO... [loading]",
+  "C:\\> NEGOCIANDO PROTOCOLO... [loading]",
+  "C:\\> CARGANDO HERRAMIENTAS... [loading]",
+  "C:\\> AUTENTICADO COMO: INVITADO",
   "",
-  "Bienvenido al sistema.",
-  "Conectarse es un privilegio.",
+  "> LA PRIVACIDAD ES UN DERECHO.",
+  "> CONECTARSE ES UN PRIVILEGIO.",
 ];
+let cm = 0;
+const bootEl = document.getElementById("boot-msg");
 
-const finalMessages = {
-  6: "[*] Discando línea segura [OK]",
-  7: "[*] Handshake establecido [OK]",
-  8: "[*] Negociando protocolo [OK]",
-};
+const SPINNER_FRAMES = ["|", "/", "-", "\\"];
+let spinnerIntervals = [];
 
-const spinnerFrames = ["|", "/", "-", "\\"];
+function startSpinner(lineId) {
+  let index = 0;
+  spinnerIntervals[lineId] = setInterval(() => {
+    const el = document.getElementById("spinner-" + lineId);
+    if (el) el.textContent = SPINNER_FRAMES[index++ % SPINNER_FRAMES.length];
+  }, 120);
+}
 
-let currentMessage = 0;
-let currentChar = 0;
-let spinnerIndex = 0;
-const bootMsgElement = document.getElementById("boot-msg");
+function stopSpinner(lineId) {
+  clearInterval(spinnerIntervals[lineId]);
+  const el = document.getElementById("spinner-" + lineId);
+  if (el) el.outerHTML = '<span class="col-verde">OK</span>';
+}
 
-// Guardamos las líneas que ya fueron tipeadas
-let typedLines = [];
+function typeNext() {
+  if (cm < bootMessages.length) {
+    let rawLine = bootMessages[cm];
+    if (rawLine.includes("[loading]")) {
+      const id = cm;
+      const textOnly = rawLine.replace("[loading]", "");
+      bootEl.innerHTML += `${textOnly}[<span id="spinner-${id}">|</span>]\n`;
+      startSpinner(id);
 
-function typeMessage() {
-  if (currentMessage < bootMessages.length) {
-    const message = bootMessages[currentMessage];
-    if (currentChar < message.length) {
-      // Mientras tipeamos el mensaje actual char por char
-      if (!typedLines[currentMessage]) typedLines[currentMessage] = "";
-      typedLines[currentMessage] += message.charAt(currentChar);
-      bootMsgElement.textContent = typedLines.join("\n");
-      currentChar++;
-      setTimeout(typeMessage, 1);
+      setTimeout(() => {
+        stopSpinner(id);
+        cm++;
+        setTimeout(typeNext, 300);
+      }, 1500);
     } else {
-      // Terminamos de tipear la línea
-      if (finalMessages[currentMessage]) {
-        animateSpinner(currentMessage);
-      } else {
-        // Solo agregamos la línea terminada y avanzamos
-        if (!typedLines[currentMessage]) typedLines[currentMessage] = message;
-        bootMsgElement.textContent = typedLines.join("\n") + "\n";
-        currentMessage++;
-        currentChar = 0;
-        setTimeout(typeMessage, 50);
-      }
+      bootEl.innerHTML += rawLine + "\n";
+      cm++;
+      setTimeout(typeNext, 180);
     }
   } else {
-    setTimeout(() => {
-      bootMsgElement.style.display = "none";
-      document.getElementById("output").style.display = "block";
-    }, 100);
+    setTimeout(showUI, 1000);
   }
 }
 
-function animateSpinner(messageIndex, spinnerCount = 0) {
-  if (spinnerCount < 20) {
-    const baseMsg = bootMessages[messageIndex];
-    const spinnerChar = spinnerFrames[spinnerIndex % spinnerFrames.length];
-    spinnerIndex++;
-    // Actualizamos sólo la línea actual con el spinner
-    typedLines[messageIndex] = baseMsg + spinnerChar;
-    bootMsgElement.textContent = typedLines.join("\n");
-    setTimeout(() => animateSpinner(messageIndex, spinnerCount + 1), 100);
-  } else {
-    // Reemplazamos la línea con el mensaje final
-    typedLines[messageIndex] = finalMessages[messageIndex];
-    bootMsgElement.textContent = typedLines.join("\n") + "\n";
-    currentMessage++;
-    currentChar = 0;
-    setTimeout(typeMessage, 50);
-  }
+function showUI() {
+  bootEl.style.display = "none";
+  document.getElementById("output").style.display = "block";
 }
-
-typeMessage();
+typeNext();
 </script>
-
+<script>
+  window.onload = () => {
+    window.scrollTo(0, 0);
+  };
+</script>
 <script>
 const link = document.getElementById('link');
 const about  = document.getElementById('about');
@@ -270,20 +251,49 @@ function closeAbout(e) {
   window.scrollTo(0, 0);
 }
 
-link.addEventListener('click', openAbout);
-
-link.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' || e.key === ' ') {
-    openAbout(e);
+ function handleKey(e) {
+    const k = e.key.toLowerCase();
+    if (k === "s") {
+      window.open("https://t.me/soportefyd_bot", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "b") {
+      window.open("https://t.me/infocertero_bot", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "c") {
+      window.open("https://t.me/capabackoffice_bot", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "l") {
+      output.style.display = 'none';
+      about.style.display = 'block';
+      e.preventDefault();
+    }
+     else if (k === "v") {
+      output.style.display = 'block';
+      about.style.display = 'none';
+      window.scrollTo(0, 0);
+      e.preventDefault();
+    }
+     else if (k === "t") {
+      window.open("https://t.me/+eRscI0QPfzg1Mzc5", "_blank");
+      e.preventDefault();
+    }
+     else if (k === "u") {
+      window.open("https://dyfdev.github.io/pagina/unix.html", "_blank");
+      e.preventDefault();
+    }
+     else if (k === "m") {
+      window.open("https://dyfdev.github.io/pagina/apple.html", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "d") {
+      window.open("https://dyfdev.github.io/", "_blank");
+      e.preventDefault();
   }
-})
-
-volver.addEventListener('click', closeAbout);
-volver.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' || e.key === ' ') {
-    closeAbout(e);
-  }
-});
-
+ }
+document.addEventListener("keydown", handleKey);
 </script>
 </html>
+
