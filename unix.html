@@ -12,10 +12,6 @@
       padding: 1rem;
       white-space: pre;
       cursor: none;
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
     }
     a {
       color: #33ff33;
@@ -58,33 +54,34 @@
 <pre id="boot-msg"></pre>
 
 <div id="output"><pre>
+<pre class="col-verde">
 >> Bienvenido al sistema BackOffice_DyF
 >> Conectarse es un privilegio.
 >> Type 'help' para comenzar.
 
-╔════════════════════════════════════════════════════════════════════════════╗
-║ [*] INICIADO…                                                              ║
-║ [*] BACKOFFICE_DyF Terminal CARGADO                                        ║
-║ [*] Acceso permitido. Bienvenido, Operador.                                ║
-║                                                                            ║
-║ [!] Un tributo a UNIX, terminales y a cuando conectarse era un ritual.     ║
-╚════════════════════════════════════════════════════════════════════════════╝
+$ boot
+INICIADO...
+BACKOFFICE_DyF Terminal CARGADO
+Acceso permitido. Bienvenido, Operador.
 
-┌─────────────────────────────────────────────────────────────────────────────┐  
-│ [+] Desarrollamos FLUJOS & HERRAMIENTAS a medida                            │  
-│ [>] Tecnologías: EXCEL │ VBA │ HTML │ JS │ CSS │ PYTHON │ SQL               │  
-├─────────────────────────────────────────────────────────────────────────────┤  
-│ Herramientas:                                                               │  
-│  [1] Soporte        -> <a href="https://t.me/soportefyd_bot" target="_blank">https://t.me/soportefyd_bot</a>                          │
-│  [2] Búsqueda       -> <a href="https://t.me/infocertero_bot" target="_blank">https://t.me/infocertero_bot</a>                         │ 
-│  [3] Capacitación   -> <a href="https://t.me/capabackoffice_bot" target="_blank">https://t.me/capabackoffice_bot</a>                      │   
-├─────────────────────────────────────────────────────────────────────────────┤  
-│  Información adicional:                                                     │
-│  [*] Sobre nosotros   -> <a href="#" target="_self" id="link">Leeme</a>                                              │ 
-│  [*] Contacto Soporte -> <a href="https://t.me/+eRscI0QPfzg1Mzc5" target="_blank">Canal de soporte</a>                                   │
-│  [*] Ver como Terminal DOS -> <a href="https://dyfdev.github.io/pagina/" target="_self">MS-DOS</a>                                        │
-│  [*] Ver como Terminal Apple -> <a href="https://dyfdev.github.io/pagina/apple.html" target="_self">Apple</a>                                       │
-└─────────────────────────────────────────────────────────────────────────────┘
+Un tributo a UNIX, terminales y a cuando conectarse era un ritual.
+
+$ info
+Desarrollamos FLUJOS & HERRAMIENTAS a medida
+Tecnologías: EXCEL | VBA | HTML | JS | CSS | PYTHON | SQL
+
+$ tools
+[S] Soporte
+[B] Búsqueda
+[C] Capacitación
+
+$ more
+[L] Sobre nosotros
+[T] Contacto Soporte
+[D] Ver como Terminal DOS
+[M] Ver como Terminal Apple
+
+
 </pre></div>
 
 <div id="terminal">
@@ -103,7 +100,7 @@ Un homenaje a la crudeza funcional, la simpleza, la velocidad y el enfoque.
 
 Cuando conectarse a un sistema era una experiencia. No una app.
 
-← <a href="#" target="_self" id="volver">Volver al menú</a>
+← [V] Volver al menú</a>
 </div>
 
 <span id="cursor">█</span>
@@ -177,19 +174,50 @@ terminalInput.addEventListener('keydown', function(e) {
   }
 });
 
-link.addEventListener('click', (e) => {
-  e.preventDefault();
-  output.style.display = 'none';
-  about.style.display = 'block';
-  terminal.style.display = 'none';
-});
-
-volver.addEventListener('click', (e) => {
-  e.preventDefault();
-  about.style.display = 'none';
-  output.style.display = 'block';
-});
+ function handleKey(e) {
+    const k = e.key.toLowerCase();
+    if (k === "s") {
+      window.open("https://t.me/soportefyd_bot", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "b") {
+      window.open("https://t.me/infocertero_bot", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "c") {
+      window.open("https://t.me/capabackoffice_bot", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "l") {
+      output.style.display = 'none';
+      about.style.display = 'block';
+      e.preventDefault();
+    }
+     else if (k === "v") {
+      output.style.display = 'block';
+      about.style.display = 'none';
+      window.scrollTo(0, 0);
+      e.preventDefault();
+    }
+     else if (k === "t") {
+      window.open("https://t.me/+eRscI0QPfzg1Mzc5", "_blank");
+      e.preventDefault();
+    }
+     else if (k === "u") {
+      window.open("https://dyfdev.github.io/pagina/unix.html", "_blank");
+      e.preventDefault();
+    }
+     else if (k === "m") {
+      window.open("https://dyfdev.github.io/pagina/apple.html", "_blank");
+      e.preventDefault();
+    }
+    else if (k === "d") {
+      window.open("https://dyfdev.github.io/", "_blank");
+      e.preventDefault();
+  }
+ }
+document.addEventListener("keydown", handleKey);
 </script>
-
 </body>
 </html>
+
